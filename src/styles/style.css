@@ -1,0 +1,323 @@
+:root {
+  font-size: 16px;
+  --dark-gray1: #424963;
+  --dark-gray2: #646c77;
+  --grass: #9ed36a;
+  --sunflower: #f5ba45;
+  --light-gray: #cbd0d8;
+  --lavender: #4b89da;
+  --lavender2: #967ada;
+  --bitter-sweet: #e8563f;
+}
+
+body {
+  background-color: #31344a;
+  margin: 0;
+}
+
+
+
+
+/***************** Header Styles *****************/
+#hero {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  background-color: var(--dark-gray1);
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--lavender);
+}
+
+/* Custom humburger menu styling */
+#hero .menu {
+  margin: 0.8rem;
+  background-color: #313852;
+  padding: 0.4rem 0.4rem 0.2rem;
+  border-radius: 0.3rem;
+}
+
+#hero .menu > div {
+  border-radius: 4px;
+  width: 1.8rem;
+  height: 0.3rem;
+  margin-bottom: 0.25rem;
+  background-color: var(--lavender);
+  box-shadow: 3px 3px 4px #323, inset -1px -1px 4px var(--lavender2);
+}
+
+#hero h1 {
+  margin: 0.8rem 0.9rem;
+  font-family: sans-serif;
+  font-size: 2em;
+  color: var(--light-gray);
+}
+
+.design {
+  color: var(--sunflower);
+  font-size: 1em;
+}
+
+.add-btn {
+  font-size: 3.7rem;
+  font-weight: 700;
+  width: 2.8rem;
+  height: 2.8rem;
+  padding: 2px;
+  border-radius: 1.9rem;
+  position: fixed;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  background-color: var(--lavender);
+  color: var(--dark-gray1);
+  font-family: serif;
+}
+
+.exit-nav,
+.add-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+/***************** Header form inputs *****************/
+header form {
+  display: none;
+  text-align: center;
+  margin-top: 0.6rem;
+}
+
+header form li {
+  list-style-type: none;
+}
+
+header form *:is(input, textarea, select) {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--dark-gray1);
+  border: 1px solid var(--dark-gray2);
+  border-radius: 0.4rem;
+  color: var(--light-gray);
+  box-sizing: border-box;
+  font-size: 1em;
+  margin: 0.2rem;
+  padding: 0.7rem 1.2rem;
+  text-align: center;
+  width: 18.2rem;
+}
+
+input[type="date"] {
+  padding-left: 6.4em;
+}
+
+header form *:is(input, textarea, select):is(:focus, :active) {
+  outline-color: var(--lavender);
+  border: none;
+}
+
+header form :is(input, textarea)::placeholder {
+  color: #3bc;
+}
+
+header form input[type='submit'] {
+  border: none;
+  font-weight: 400;
+  color: snow;
+  background-color: var(--lavender);
+  padding: 0.6rem 0.8rem;
+  width: 6rem;
+  text-transform: capitalize;
+}
+
+
+
+
+/***************** Todo list items & container styling *****************/
+#tasks-list {
+  margin: 1rem 0.4rem 0;
+  padding: 0.2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(365px, 400px));
+  grid-gap: 0.2rem;
+  justify-content: center;
+}
+
+.task {
+  background-color: #42496a;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+.task > section:first-child,
+.task > .task-details > section:first-child {
+  display: flex;
+  justify-content: space-between;
+}
+
+.task > section:first-child > div {
+  display: flex;
+}
+
+.task:hover,
+.task:active {
+  border: 2px solid var(--lavender2);
+}
+
+.task-status {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0.15rem solid var(--light-gray);
+  border-radius: 1rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  padding: 0;
+  margin-top: 0.3rem;
+}
+
+.task-status:checked,
+.task-status:visited {
+  background-color: #9ed36a;
+  border-color: #9ed36a;
+  outline: none;
+}
+
+.task-status:checked:before {
+  content: "✓";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+  font-weight: 600;
+}
+
+.task-title {
+  font-weight: 600;
+  font-family: sans-serif;
+  margin-left: 0.4rem;
+  padding: 0.6rem;
+  max-width: 16.2rem;
+  min-width: 8rem;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  color: var(--light-gray);
+}
+
+.task-priority {
+  font-size: 0.8em;
+  font-family: sans-serif;
+}
+
+.task-due-date {
+  margin: 0 0.4rem 0;
+  padding: 0.4rem 0.4rem 0.4rem 0.3rem;
+  background-color: #42496a;
+  border: 0;
+  border-bottom: 0.2rem solid var(--lavender);
+  color: var(--light-gray);
+}
+
+.edit-task {
+  margin-right: 0.6rem;
+  padding: 0.3rem 1.2rem;
+  background-color: var(--lavender);
+  border: none;
+  border-radius: 0.4rem;
+  font-weight: 500;
+}
+
+.delete {
+  padding: 0 0.6rem;
+  color: var(--lavender);
+  font-size: 2.1em;
+}
+
+.task-note {
+  margin: 0.4rem;
+  margin-bottom: 0.02rem;
+  padding: 0.4rem;
+  color: var(--light-gray);
+  font-family: sans-serif;
+}
+
+.task-note h3 {
+  margin: 0;
+  color: var(--lavender2);
+}
+
+.task-note p {
+  margin: 0.4rem;
+  font-style: italic;
+}
+
+.finished-task {
+  text-decoration: line-through;
+  font-style: italic;
+  color: #bbb;
+}
+
+
+
+/************** Side navigation menu ***************/
+aside {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  min-width: 19rem;
+  background-color: var(--dark-gray1);
+  color: var(--light-gray);
+  z-index: 1;
+  display: none;
+  font-family: sans-serif;
+}
+
+.exit-nav {
+  width: 1.9rem;
+  height: 1.9rem;
+  margin: 0.6rem;
+  font-weight: 500;
+  font-size: 1.9rem;
+  border: 3px solid var(--lavender);
+  color: var(--lavender);
+  background-color: transparent;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+aside > section:first-child {
+  display: flex;
+  justify-content: space-between;
+}
+
+aside > section > h2 {
+  margin-left: 0.5rem;
+}
+
+.side-nav li {
+  list-style-type: none;
+  margin-left: 0.5rem;
+} 
+
+.side-nav h3 {
+  font-size: 1.4em;
+  margin-top: 0;
+  margin-bottom: 0.3rem;
+}
+
+.projects {
+  margin-left: 0.6rem;
+}
+
+#new-project,
+#delete-project {
+  padding: 0.6rem 0.6rem;
+  background-color: var(--lavender);
+  width: 6rem;
+  text-align: center;
+  border-radius: 0.4rem;
+}
