@@ -313,11 +313,34 @@ aside > section > h2 {
   margin-left: 0.6rem;
 }
 
-#new-project,
-#delete-project {
-  padding: 0.6rem 0.6rem;
-  background-color: var(--lavender);
-  width: 6rem;
+.manage-tasks {
   text-align: center;
+}
+
+.manage-tasks > button {
+  padding: 0.6rem 0.6rem;
+  width: 6.5rem;
+}
+
+.manage-tasks button {
+  background-color: var(--lavender);
+  text-align: center;
+  border: none;
   border-radius: 0.4rem;
+  margin: 0 0.4rem;
+}
+
+.confirmation {
+  display: none;
+  margin: 0.5rem 0.9rem;
+  text-align: center;
+  border: 1px solid var(--lavender);
+  border-radius: 0.4rem;
+  box-shadow: 4px 4px 3px #434;
+  padding: 0.5rem;
+}
+
+.confirmation button {
+  padding: 0.4rem 0.4rem;
+  width: 3rem;
 }
