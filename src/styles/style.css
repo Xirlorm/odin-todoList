@@ -264,7 +264,7 @@ header form input[type='submit'] {
 
 /************** Side navigation menu ***************/
 aside {
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   min-width: 19rem;
@@ -275,6 +275,8 @@ aside {
   font-family: sans-serif;
   border-top-right-radius: 0.4rem;
   border-bottom-right-radius: 0.4rem;
+  height: 100%;
+  overflow-y: scroll;
 }
 
 .exit-nav {
@@ -320,12 +322,15 @@ aside > section:first-child {
   border-radius: 0.4rem;
   display: flex;
   justify-content: flex-start;
+  align-items: center;
+}
+
+#projects > li:nth-child(2n + 1) {
+  padding: 0.15rem 0.5rem;
 }
 
 #projects > li .delete-project {
-  padding: 0;
-  margin-top: -0.4rem;
-  margin-right: 0.8rem;
+  margin: 0 0.3rem 0 0;
   font-size: 1.8rem;
   color: var(--lavender);
   background: none;

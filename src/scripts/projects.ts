@@ -8,9 +8,21 @@ export default class Project {
 
   static data: {[key: string]: todo[]} = {
     'default': [
-      todo.new('Make breakfast', '09/19/2023', 1, true, '$'),
-      todo.new('Take a stroll', '05/21/2023', 2, false, 'Brief'),
-      todo.new('Buy Rick a new Quantum physics textbook from the mall', '10/11/23', 2, false, 'Brief'),
+      todo.new('Click/Tap todo title to see more...',
+               '2023-04-19',
+               1,
+               true,
+               '-_- Ha! You\'re now in my b·_·by trap! :)'),
+      todo.new('Take a stroll',
+               '2020-11-15',
+               2,
+               false,
+               'Testing your limits doesn\'t break you. Does it?'),
+      todo.new('Buy Rick a new Quantum physics textbook from the mall',
+               '2023-07-28',
+               2,
+               true,
+               'Oh heavens! My UI sucks! -_- Don\'t even talk about the logic'),
     ],
   };
 

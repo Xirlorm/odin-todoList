@@ -33,7 +33,7 @@ export default {
     if (todo.isComplete) taskTitle.classList.toggle('finished-task');
     // Task due date
     const taskDue = document.createElement('p');
-    taskDue.innerText = todo.dueDate.replace('/', ' · ').replace('/', ' · ');
+    taskDue.innerText = todo.dueDate.replace('-', ' · ').replace('-', ' · ');
     taskDue.classList.add('task-due-date');
     // Task deletion button
     const deleteTask = document.createElement('div');

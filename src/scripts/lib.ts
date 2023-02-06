@@ -107,13 +107,30 @@ export default {
       })
 
       Ui.projectList.appendChild(project);
+      this.showTasks(Project.get(projectTitle));
       title.value = '';
+      return;
     }
+    if (projectExists) {
+      alert('Caution: Project already exists!!');
+      this.showTasks(Project.get(projectTitle));
+      return;
+    }
+    alert('Error: Project title cannot be empty');
   },
 
+  // Delete the current project
   deleteCurrentProject() {
     Project.del(Project.currentProject);
     Project.currentProject = 'default';
     this.showTasks(Project.get(Project.currentProject));
+
+    // Remove Project listing from projects list
+    const menuProjectUi = document.querySelectorAll('#projects > li');
+    menuProjectUi.forEach(project => {
+      const projectName = project.getAttribute('data-project-name');
+      if (!(projectName in Project.data))
+        Ui.taskList.removeChild(project);
+    })
   }
 }
