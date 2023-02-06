@@ -54,7 +54,7 @@ body {
 }
 
 .design {
-  color: var(--sunflower);
+  color: gold;
   font-size: 1em;
 }
 
@@ -278,7 +278,7 @@ aside {
 .exit-nav {
   width: 1.9rem;
   height: 1.9rem;
-  margin: 0.6rem;
+  margin: 0.8rem 0.6rem;
   font-weight: 500;
   font-size: 1.9rem;
   border: 3px solid var(--lavender);
@@ -292,34 +292,43 @@ aside {
 aside > section:first-child {
   display: flex;
   justify-content: space-between;
+  margin: 0.2rem 0 0.2rem 0.6rem;
 }
 
-aside > section > h2 {
-  margin-left: 0.5rem;
+.nav {
+  font-size: 1.2em;
+  font-weight: 600;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  padding: 0.2rem 0 0 0.6rem;
 }
 
-.side-nav li {
+.side-nav > div:nth-last-child(2) {
+  padding-bottom: 0.8rem;
+}
+
+#projects > li {
   list-style-type: none;
-  margin-left: 0.5rem;
-} 
-
-.side-nav h3 {
-  font-size: 1.4em;
-  margin-top: 0;
-  margin-bottom: 0.3rem;
-}
-
-.projects {
-  margin-left: 0.6rem;
+  margin: 0.2rem;
+  padding: 0.8rem 1rem 0.8rem 1rem;
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: 1.1rem;
+  background-color: #31344a;
+  border-radius: 0.4rem;
 }
 
 .manage-tasks {
   text-align: center;
+  padding: 1rem 0;
+  box-shadow: 0 3px 6px #434;
+  margin-bottom: 1rem;
+  border-top: 2px solid #434;
 }
 
 .manage-tasks > button {
-  padding: 0.6rem 0.6rem;
-  width: 6.5rem;
+  padding: 0.7rem 0.6rem;
+  width: 8rem;
 }
 
 .manage-tasks button {
@@ -328,19 +337,24 @@ aside > section > h2 {
   border: none;
   border-radius: 0.4rem;
   margin: 0 0.4rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  color: #fff;
 }
 
 .confirmation {
-  display: none;
-  margin: 0.5rem 0.9rem;
+  /* display: none; */
+  margin: 0.8rem 0.9rem;
   text-align: center;
-  border: 1px solid var(--lavender);
+  border: 2px solid #434;
   border-radius: 0.4rem;
-  box-shadow: 4px 4px 3px #434;
-  padding: 0.5rem;
+  border: 2px solid #434;
+  padding: 0.6rem;
+  max-width: 16rem;
 }
 
 .confirmation button {
+  margin-top: 0.4rem;
   padding: 0.4rem 0.4rem;
   width: 3rem;
 }
