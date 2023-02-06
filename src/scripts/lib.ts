@@ -81,8 +81,39 @@ export default {
 
   createProject() {
     const title:HTMLInputElement = document.querySelector('#project-form #title');
-    Project.add(title.value);
-    Ui.projectList.appendChild(Ui.createProject(title.value));
-    title.value = '';
+    const projectTitle = title.value
+    const projectExists = projectTitle in Project.data;
+
+    if (projectTitle.length > 0 && !projectExists) {
+      const project = Ui.createProject(projectTitle);
+      Project.add(projectTitle);
+
+      project.addEventListener('click', (event) => {
+        event.stopPropagation();
+        if (Project.currentProject !== projectTitle) {
+          this.showTasks(Project.get(projectTitle));
+          Project.currentProject = projectTitle;
+        }
+        Ui.hideMenu();
+      });
+
+      project.querySelector('.delete-project')
+      .addEventListener('click', (event) => {
+        event.stopPropagation();
+        Project.del(projectTitle);
+        this.showTasks(Project.get('default'));
+        Project.currentProject = 'default';
+        Ui.projectList.removeChild(project);
+      })
+
+      Ui.projectList.appendChild(project);
+      title.value = '';
+    }
+  },
+
+  deleteCurrentProject() {
+    Project.del(Project.currentProject);
+    Project.currentProject = 'default';
+    this.showTasks(Project.get(Project.currentProject));
   }
 }

@@ -28,10 +28,8 @@ export default class Project {
 
 
   // Delete project
-  static delete(projectName: string) {
-    if (projectName == 'default')
-      return;
-
+  static del(projectName: string) {
+    if (projectName == 'default') return;
     delete this.data[projectName];
   }
 

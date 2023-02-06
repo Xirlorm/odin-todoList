@@ -5,7 +5,7 @@ import todo from './todo';
 export default {
   // Task container
   taskList: document.querySelector('#tasks-list'),
-  projectList: document.querySelector('.projects'),
+  projectList: document.querySelector('#projects'),
 
 
   newTaskUI (todo: todo): HTMLElement {
@@ -82,7 +82,7 @@ export default {
 
   createProject(title: string) {
     const project = document.createElement('li');
-    const projectTitle = document.createElement('h4');
+    const projectTitle = document.createElement('div');
     const deleteProject = document.createElement('button');
     projectTitle.textContent = ' ' + title;
     deleteProject.textContent = '×';
