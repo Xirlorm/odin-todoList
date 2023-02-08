@@ -127,4 +127,13 @@ export default {
     Project.currentProject = 'default';
     this.showTasks(Project.get('default'));
   },
+
+
+  showTodayTasks() {
+    UI.taskList.textContent = ''
+    const todayTasks = Project.getTodayTasks();
+    todayTasks.forEach( task => {
+      UI.taskList.appendChild(this.addTaskEvents(UI.newTaskUI(task)))
+    })
+  }
 }

@@ -57,7 +57,7 @@ export default class Project {
 
   // (Un)check todo task 
   static toggleTodoStatus(projectName: string, taskId: number) {
-    this.data[projectName].forEach(task => {
+    this.data[projectName].forEach((task) => {
       if (task.id == taskId) task.toggleCompletion;
     })
   }
@@ -66,7 +66,7 @@ export default class Project {
   // Delete todo item 
   static deleteTodo(projectName: string, taskId: number) {
     this.data[projectName] = 
-      this.data[projectName].map(task => {
+      this.data[projectName].map((task) => {
         if (taskId != task.id) return task;
       })
   }
@@ -76,4 +76,21 @@ export default class Project {
   static hasProject(projectName: string) {
     return projectName in this.data;
   }
+
+  // Get tasks with today's date
+  static getTodayTasks() {
+    const todayTasks: todo[] = [];
+    const todaysDate = new Date().toISOString().slice(0, 10);
+
+    Object.keys(this.data).forEach( project => {
+      this.data[project].forEach( (task) => {
+        if (task.dueDate === todaysDate)
+          todayTasks.push(task)
+      })
+    })
+
+    return todayTasks
+  }
+
+  // checklist
 }

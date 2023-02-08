@@ -82,6 +82,9 @@ import './styles/style.css';
     Project.currentProject = 'default';
     Ui.hideMenu();
   });
+  
+  document.querySelector('#today-tasks')
+  .addEventListener('click', Lib.showTodayTasks);
 
   // Set form date input value to current date 
   const dateInput: HTMLInputElement = 
