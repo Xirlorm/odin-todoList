@@ -47,7 +47,7 @@ export default {
     const taskNote = document.createElement('section');
     taskNote.classList.add('task-note');
     const noteLabel = document.createElement('h3');
-    noteLabel.innerText = 'Note:';
+    noteLabel.innerText = 'Note';
     const note = document.createElement('p');
     note.textContent = todo.note;
     taskNote.appendChild(noteLabel);

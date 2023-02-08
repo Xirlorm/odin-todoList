@@ -124,13 +124,16 @@ export default {
     Project.del(Project.currentProject);
     Project.currentProject = 'default';
     this.showTasks(Project.get(Project.currentProject));
+    this.removeProjectFromList(Project.currentProject);
+  },
 
-    // Remove Project listing from projects list
+  removeProjectFromList(projectName: string) {
     const menuProjectUi = document.querySelectorAll('#projects > li');
-    menuProjectUi.forEach(project => {
-      const projectName = project.getAttribute('data-project-name');
+    menuProjectUi.forEach((project) => {
+      alert(projectName)
+      alert(project)
       if (!(projectName in Project.data))
         Ui.taskList.removeChild(project);
     })
-  }
+  },
 }
