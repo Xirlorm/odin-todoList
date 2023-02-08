@@ -28,7 +28,9 @@ export default class Project {
 
   // Get project 
   static get(projectName = 'default'): todo[] {
-    return this.data[projectName];
+    if (projectName in this.data)
+      return this.data[projectName];
+    return [];
   }
 
 
@@ -41,18 +43,14 @@ export default class Project {
 
   // Delete project
   static del(projectName: string) {
-    if (projectName == 'default') return;
-    delete this.data[projectName];
+    if (projectName !== 'default')
+      delete this.data[projectName];
   }
 
   
   // Add todo item to a project
   static addTodo(projectName = 'default', value: todo) {
-    if (projectName in this.data) {
-      this.data[projectName].push(value);
-      return;
-    }
-    this.add(projectName);
+    if (projectName in this.data) this.add(projectName);
     this.data[projectName].push(value);
   }
 
@@ -60,16 +58,22 @@ export default class Project {
   // (Un)check todo task 
   static toggleTodoStatus(projectName: string, taskId: number) {
     this.data[projectName].forEach(task => {
-      if (task.id == taskId)
-        task.toggleCompletion;
+      if (task.id == taskId) task.toggleCompletion;
     })
   }
 
   
   // Delete todo item 
   static deleteTodo(projectName: string, taskId: number) {
-    this.data[projectName] = this.data[projectName].map(task => {
-      if (taskId != task.id) return task;
-    })
+    this.data[projectName] = 
+      this.data[projectName].map(task => {
+        if (taskId != task.id) return task;
+      })
+  }
+
+
+  // Check existence of a project
+  static hasProject(projectName: string) {
+    return projectName in this.data;
   }
 }

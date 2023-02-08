@@ -1,6 +1,6 @@
 'use strict'
 
-import Ui from './ui';
+import UI from './ui';
 import Project from './projects';
 import todo from './todo';
 
@@ -13,23 +13,22 @@ const note: HTMLInputElement = todoForm.querySelector('#note');
 export default {
   // Add events to todo elements
   addTaskEvents(task: HTMLElement) {
+    const taskId = parseInt(task.getAttribute('data-todo-id'))
+    // Show details when title is clicked
     task.querySelector('.task-title').addEventListener('click', () => {
       const taskDetails: HTMLElement = task.querySelector('.task-details');
-      Ui.toggleDisplay(taskDetails, 'block');
+      UI.toggleDisplay(taskDetails, 'block');
     });
-
+    // Toggle status and show changes when status is clicked
     task.querySelector('.task-status').addEventListener('change', () => {
-      // const id = task.getAttribute('data-todo-id');
-      // Project.toggleTodoStatus(Project.currentProject, Number.parseInt(id));
-      task.querySelector('.task-title').classList.toggle('finished-task');
+      task.querySelector('.task-title')
+        .classList.toggle('finished-task');
+      Project.toggleTodoStatus(Project.currentProject, taskId)
     });
-
+    // Delete a task
     task.querySelector('.delete').addEventListener('click', () => {
-      const id = task.getAttribute('data-todo-id');
-      Project.deleteTodo(
-        Project.currentProject, Number.parseInt(id)
-      );
-      Ui.taskList.removeChild(task);
+      Project.deleteTodo(Project.currentProject, taskId);
+      UI.taskList.removeChild(task);
     });
 
     return task;
@@ -38,11 +37,11 @@ export default {
 
   // Display a collection of todo to user
   showTasks(tasks: todo[]) {
-    Ui.taskList.textContent = '';
+    UI.taskList.textContent = '';
 
     tasks.forEach((task) => {
-      Ui.taskList.appendChild(
-        this.addTaskEvents(Ui.newTaskUI(task))
+      UI.taskList.appendChild(
+        this.addTaskEvents(UI.newTaskUI(task))
       );
     });
   },
@@ -50,90 +49,82 @@ export default {
 
   // Using user defined values, add new todo to projects
   createTodo() {
-    if (title.value.length > 1) {
-      Project.addTodo(
-        Project.currentProject,
-        todo.new(
-          title.value,
-          dueDate.value,
-          Number.parseInt(priority.value),
-          false,
-          note.value,
-       ) 
-      );
-      return true;
-    }
+    if (title.value.length < 1) return false
 
-    alert("Error: Task title cannot be empty!")
-    return false;
+    Project.addTodo(
+      Project.currentProject,
+      todo.new(
+        title.value,
+        dueDate.value,
+        Number.parseInt(priority.value),
+        false,
+        note.value
+      ) 
+    );
+
+    return true;
   },
 
 
   // Erase values entered into form by user
   clearFormInput() {
     const today = new Date().toISOString();
-
     title.value = '';
     dueDate.value = today.slice(0,10);
     priority.value = 'Priority';
     note.value = '';
   },
 
-  createProject() {
-    const title:HTMLInputElement = document.querySelector('#project-form #title');
-    const projectTitle = title.value
+  newProject() {
+    const projectTitleElement: HTMLInputElement =
+      document.querySelector('#project-form #title');
+    const projectTitle = projectTitleElement.value
     const projectExists = projectTitle in Project.data;
 
     if (projectTitle.length > 0 && !projectExists) {
-      const project = Ui.createProject(projectTitle);
+      const projectUI = UI.createProject(projectTitle);
       Project.add(projectTitle);
 
-      project.addEventListener('click', (event) => {
+      projectUI.addEventListener('click', (event) => {
         event.stopPropagation();
-        if (Project.currentProject !== projectTitle) {
-          this.showTasks(Project.get(projectTitle));
+
+        this.showTasks(Project.get(projectTitle));
+        UI.hideMenu();
+        if (Project.currentProject !== projectTitle)
           Project.currentProject = projectTitle;
-        }
-        Ui.hideMenu();
       });
+ 
+      projectUI.querySelector('.delete-project')
+        .addEventListener('click', (event) => {
+          event.stopPropagation();
+          Project.del(projectTitle);
+          this.showTasks(Project.get('default'));
+          Project.currentProject = 'default';
+          UI.projectList.removeChild(projectUI);
+        })
 
-      project.querySelector('.delete-project')
-      .addEventListener('click', (event) => {
-        event.stopPropagation();
-        Project.del(projectTitle);
-        this.showTasks(Project.get('default'));
-        Project.currentProject = 'default';
-        Ui.projectList.removeChild(project);
-      })
-
-      Ui.projectList.appendChild(project);
+      UI.projectList.appendChild(projectUI);
       this.showTasks(Project.get(projectTitle));
-      title.value = '';
-      return;
-    }
-    if (projectExists) {
+      projectTitleElement.value = '';
+    } else if (projectExists) {
       alert('Caution: Project already exists!!');
       this.showTasks(Project.get(projectTitle));
-      return;
     }
-    alert('Error: Project title cannot be empty');
   },
 
   // Delete the current project
   deleteCurrentProject() {
+    const project = UI.projectList.getElementsByTagName('li');
+    alert(project.length)
+
+    for (let i = 0; i < project.length; ++i) {
+      const projectName = project[i].getAttribute('data-project-name')
+      if (projectName === Project.currentProject)
+        UI.projectList.removeChild(project[i]);
+    }
+
     Project.del(Project.currentProject);
     Project.currentProject = 'default';
-    this.showTasks(Project.get(Project.currentProject));
-    this.removeProjectFromList(Project.currentProject);
-  },
-
-  removeProjectFromList(projectName: string) {
-    const menuProjectUi = document.querySelectorAll('#projects > li');
-    menuProjectUi.forEach((project) => {
-      alert(projectName)
-      alert(project)
-      if (!(projectName in Project.data))
-        Ui.taskList.removeChild(project);
-    })
+    this.showTasks(Project.get('default'));
   },
 }

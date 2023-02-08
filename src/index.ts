@@ -47,7 +47,7 @@ import './styles/style.css';
       document.querySelector('#project-form'), 'none'
     );
     Ui.showMenu();
-    Lib.createProject();
+    Lib.newProject();
     event.preventDefault();
   })
 
