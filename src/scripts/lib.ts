@@ -1,14 +1,14 @@
 'use strict'
 
-import UI from './ui';
-import Project from './projects';
-import todo from './todo';
+import UI from './ui'
+import Project from './projects'
+import todo from './todo'
 
-const todoForm: HTMLElement = document.querySelector('#todo-form');
-const title: HTMLInputElement = todoForm.querySelector('#title');
-const dueDate: HTMLInputElement = todoForm.querySelector('#due-date');
-const priority: HTMLInputElement = todoForm.querySelector('#priority');
-const note: HTMLInputElement = todoForm.querySelector('#note');
+const todoForm: HTMLElement = document.querySelector('#todo-form')
+const title: HTMLInputElement = todoForm.querySelector('#title')
+const dueDate: HTMLInputElement = todoForm.querySelector('#due-date')
+const priority: HTMLInputElement = todoForm.querySelector('#priority')
+const note: HTMLInputElement = todoForm.querySelector('#note')
 
 export default {
   // Add events to todo elements
@@ -16,34 +16,32 @@ export default {
     const taskId = parseInt(task.getAttribute('data-todo-id'))
     // Show details when title is clicked
     task.querySelector('.task-title').addEventListener('click', () => {
-      const taskDetails: HTMLElement = task.querySelector('.task-details');
-      UI.toggleDisplay(taskDetails, 'block');
-    });
+      const taskDetails: HTMLElement = task.querySelector('.task-details')
+      UI.toggleDisplay(taskDetails, 'block')
+    })
     // Toggle status and show changes when status is clicked
     task.querySelector('.task-status').addEventListener('change', () => {
       task.querySelector('.task-title')
-        .classList.toggle('finished-task');
+        .classList.toggle('finished-task')
       Project.toggleTodoStatus(Project.currentProject, taskId)
-    });
+    })
     // Delete a task
     task.querySelector('.delete').addEventListener('click', () => {
-      Project.deleteTodo(Project.currentProject, taskId);
-      UI.taskList.removeChild(task);
-    });
+      Project.deleteTodo(Project.currentProject, taskId)
+      UI.taskList.removeChild(task)
+    })
 
-    return task;
+    return task
   },
 
 
   // Display a collection of todo to user
   showTasks(tasks: todo[]) {
-    UI.taskList.textContent = '';
+    UI.taskList.textContent = ''
 
     tasks.forEach((task) => {
-      UI.taskList.appendChild(
-        this.addTaskEvents(UI.newTaskUI(task))
-      );
-    });
+      UI.taskList.appendChild(this.addTaskEvents(UI.newTaskUI(task)))
+    })
   },
 
 
@@ -60,80 +58,72 @@ export default {
         false,
         note.value
       ) 
-    );
+    )
 
-    return true;
+    return true
   },
 
 
   // Erase values entered into form by user
   clearFormInput() {
-    const today = new Date().toISOString();
-    title.value = '';
-    dueDate.value = today.slice(0,10);
-    priority.value = 'Priority';
-    note.value = '';
+    const today = new Date().toISOString()
+    title.value = ''
+    dueDate.value = today.slice(0,10)
+    priority.value = 'Priority'
+    note.value = ''
   },
 
   newProject() {
     const projectTitleElement: HTMLInputElement =
-      document.querySelector('#project-form #title');
+      document.querySelector('#project-form #title')
     const projectTitle = projectTitleElement.value
-    const projectExists = projectTitle in Project.data;
+    const projectExists = projectTitle in Project.data
 
     if (projectTitle.length > 0 && !projectExists) {
-      const projectUI = UI.createProject(projectTitle);
-      Project.add(projectTitle);
+      const projectUI = UI.createProject(projectTitle)
+      Project.add(projectTitle)
 
       projectUI.addEventListener('click', (event) => {
-        event.stopPropagation();
+        event.stopPropagation()
 
-        this.showTasks(Project.get(projectTitle));
-        UI.hideMenu();
+        this.showTasks(Project.get(projectTitle))
+        UI.hideMenu()
         if (Project.currentProject !== projectTitle)
-          Project.currentProject = projectTitle;
-      });
+          Project.currentProject = projectTitle
+      })
  
       projectUI.querySelector('.delete-project')
         .addEventListener('click', (event) => {
-          event.stopPropagation();
-          Project.del(projectTitle);
-          this.showTasks(Project.get('default'));
-          Project.currentProject = 'default';
-          UI.projectList.removeChild(projectUI);
+          event.stopPropagation()
+          Project.del(projectTitle)
+          this.showTasks(Project.get('default'))
+          Project.currentProject = 'default'
+          UI.projectList.removeChild(projectUI)
         })
 
-      UI.projectList.appendChild(projectUI);
-      this.showTasks(Project.get(projectTitle));
-      projectTitleElement.value = '';
+      UI.projectList.appendChild(projectUI)
+      this.showTasks(Project.get(projectTitle))
+      projectTitleElement.value = ''
     } else if (projectExists) {
-      alert('Caution: Project already exists!!');
-      this.showTasks(Project.get(projectTitle));
+      alert('Caution: Project already exists!!')
+      this.showTasks(Project.get(projectTitle))
     }
   },
 
   // Delete the current project
   deleteCurrentProject() {
-    const project = UI.projectList.getElementsByTagName('li');
+    const project = UI.projectList.getElementsByTagName('li')
     alert(project.length)
 
     for (let i = 0; i < project.length; ++i) {
       const projectName = project[i].getAttribute('data-project-name')
       if (projectName === Project.currentProject)
-        UI.projectList.removeChild(project[i]);
+        UI.projectList.removeChild(project[i])
     }
 
-    Project.del(Project.currentProject);
-    Project.currentProject = 'default';
-    this.showTasks(Project.get('default'));
+    Project.del(Project.currentProject)
+    Project.currentProject = 'default'
+    this.showTasks(Project.get('default'))
   },
 
-
-  showTodayTasks() {
-    UI.taskList.textContent = ''
-    const todayTasks = Project.getTodayTasks();
-    todayTasks.forEach( task => {
-      UI.taskList.appendChild(this.addTaskEvents(UI.newTaskUI(task)))
-    })
-  }
 }

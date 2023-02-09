@@ -93,4 +93,24 @@ export default class Project {
   }
 
   // checklist
+  static getChecklist() {
+    const checklist: todo[] = [];
+
+    Object.keys(this.data).forEach( project => {
+      this.data[project].forEach( (task) => {
+        if (task.isComplete === false)
+          checklist.push(task)
+      })
+    })
+
+    Object.keys(this.data).forEach( project => {
+      this.data[project].forEach( (task) => {
+        if (task.isComplete === true)
+          checklist.push(task)
+      })
+    })
+
+    return checklist
+  }
+
 }

@@ -3,7 +3,6 @@
 import todo from './todo';
 
 export default {
-  // Task container
   taskList: document.querySelector('#tasks-list'),
   projectList: document.querySelector('#projects'),
 
