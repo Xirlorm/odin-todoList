@@ -3,8 +3,8 @@
 import todo from './todo'
 
 export default {
-  taskList: document.querySelector('#tasks-list'),
-  projectList: document.querySelector('#projects'),
+  taskList: document.getElementById('tasks-list'),
+  projectList: document.getElementById('projects'),
 
 
   newTask(todo: todo) {
@@ -85,7 +85,7 @@ export default {
     projectTitle.textContent = ' ' + title
     const deleteProject = document.createElement('button')
     deleteProject.textContent = '×'
-    deleteProject.classList.add('del-project')
+    deleteProject.classList.add('delete-project')
     const project = document.createElement('li')
     project.setAttribute('data-project', title)
     project.appendChild(deleteProject)
@@ -95,13 +95,13 @@ export default {
   },
 
 
-  addProject(title: HTMLElement) {
-    this.projectList.appendChild(title)
+  addProject(project: HTMLElement) {
+    this.projectList.appendChild(project)
   },
 
 
-  removeProject(title: HTMLElement) {
-    this.projectList.removeChild(title)
+  removeProject(project: HTMLElement) {
+    this.projectList.removeChild(project)
   },
 
 

@@ -37,7 +37,7 @@ import './styles/style.css'
       } 
     })
 
-  // Show form input to create new project
+  // Create new project
   document.getElementById('create-project').addEventListener('click', (event) => {
       event.preventDefault()
       UI.setDisplay(document.querySelector('#project-form'), 'none')
@@ -65,29 +65,22 @@ import './styles/style.css'
 
   // Show default projects when default project is clicked
   document.querySelector('#projects #default').addEventListener('click', () => {
-      const defaultProjects = Project.get()
-      Lib.showTasks(defaultProjects)
+      Lib.showTasks(Project.get())
+      alert()
       Project.currentProject = 'default'
       UI.hideMenu()
     })
   
   // Show tasks for today
   document.getElementById('today-tasks').addEventListener('click', () => {
-      UI.taskList.textContent = ''
-      Project.getTodayTasks().forEach(task => {
-        UI.taskList.appendChild(Lib.addTaskEvents(UI.newTask(task), task))
-        alert()
-        UI.hideMenu()
-      })
+      Lib.showTasks(Project.getTodayTasks())
+      UI.hideMenu()
     })
 
   // Show user a checklist
   document.getElementById('checklist').addEventListener('click', () => {
-      UI.taskList.textContent = ''
-      Project.getChecklist().forEach(task => {
-        UI.taskList.appendChild(Lib.addTaskEvents(UI.newTask(task), task))
-        UI.hideMenu()
-      })
+      Lib.showTasks(Project.getChecklist())
+      UI.hideMenu()
     })
 
   // Save changes to task

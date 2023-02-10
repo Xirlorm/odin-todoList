@@ -32,8 +32,8 @@ export default class Project {
   // Get project 
   static get(projectName = 'default'): todo[] {
     if (projectName in this.data)
-      return this.data[projectName]
-    return []
+      return this.data[projectName].map(t => t)
+    return [] as todo[]
   }
 
 
@@ -92,7 +92,7 @@ export default class Project {
   }
 
   // Get tasks with today's date
-  static getTodayTasks() {
+  static getTodayTasks(): todo[] {
     const todayTasks: todo[] = []
     const today = new Date().toISOString().slice(0, 10)
 
@@ -107,7 +107,7 @@ export default class Project {
   }
 
   // Get a checklist of all todo tasks
-  static getChecklist() {
+  static getChecklist(): todo[] {
     const checklist: todo[] = []
 
     Object.keys(this.data).forEach( project => {

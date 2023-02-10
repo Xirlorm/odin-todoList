@@ -54,6 +54,8 @@ export default {
     return task
   },
 
+
+  // Edit a task
   editTask() {
     todoForm.style.display = 'none'
     UI.setDisplay(document.getElementById('create-todo'), 'inline')
@@ -75,7 +77,7 @@ export default {
   // Display a collection of todo to user
   showTasks(tasks: todo[]) {
     UI.taskList.textContent = ''
-    tasks.forEach((task) => {
+    tasks.forEach( task => {
       UI.taskList.appendChild(
         this.addTaskEvents(UI.newTask(task), task)
       )
@@ -134,6 +136,7 @@ export default {
  
       projectUI.querySelector('.delete-project')
         .addEventListener('click', (event) => {
+      alert('$')
           event.stopPropagation()
           Project.del(projectTitle)
           UI.removeProject(projectUI)
@@ -161,7 +164,7 @@ export default {
     }
     Project.del(Project.currentProject)
     Project.currentProject = 'default'
-    this.showTasks(Project.get('default'))
+    this.showTasks(Project.get())
   },
 
 }
