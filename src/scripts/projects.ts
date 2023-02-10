@@ -1,6 +1,7 @@
 'use strict'
 
 import todo from './todo'
+import Storage from './storage'
 
 export default class Project {
   static currentProject = 'default'
@@ -41,6 +42,7 @@ export default class Project {
   static add(projectName: string) {
     if (!(projectName in this.data))
       this.data[projectName] = []
+    Storage.storeTodoData(projectName, this.get(projectName))
   }
 
 
@@ -48,15 +50,17 @@ export default class Project {
   static del(projectName: string) {
     if (projectName !== 'default')
       delete this.data[projectName]
+    Storage.remove(projectName)
   }
 
   
   // Add todo item to a project
   static addTodo(projectName = 'default', value: todo) {
-    if (projectName in this.data)
+    if (!(projectName in this.data))
       this.add(projectName)
 
     this.data[projectName].push(value)
+    Storage.storeTodoData(projectName, this.get(projectName))
   }
 
 
@@ -65,6 +69,7 @@ export default class Project {
     this.data[projectName].forEach((task) => {
       if (task.id == taskId) task.toggleCompletion
     })
+    Storage.storeTodoData(projectName, this.get(projectName))
   }
 
   // Change todo task information
@@ -75,6 +80,10 @@ export default class Project {
           return newTask
         return task
       })
+    Storage.storeTodoData(
+      this.currentProject,
+      this.get(this.currentProject)
+    )
   }
   
   // Delete todo item 
@@ -83,6 +92,7 @@ export default class Project {
       this.data[projectName].map((task) => {
         if (taskId != task.id) return task
       })
+    Storage.storeTodoData(projectName, this.get(projectName))
   }
 
 
@@ -125,4 +135,14 @@ export default class Project {
     return checklist
   }
 
+  static initializeData() {
+    if (Storage.checkStorage)
+      if (Storage.getSize() > 0) {
+        Storage.getKeys().forEach(project => {
+          Storage.getTodoData(project).forEach((task: todo) => {
+            Project.addTodo(project, task)
+          })
+        })
+      }
+  }
 }

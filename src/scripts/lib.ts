@@ -116,40 +116,21 @@ export default {
 
   // Create new project
   newProject() {
-    const projectTitleElement: HTMLInputElement =
+    const projectNameElement: HTMLInputElement =
       document.querySelector('#project-form #title')
-    const projectTitle = projectTitleElement.value
-    const projectExists = projectTitle in Project.data
+    const projectName = projectNameElement.value
+    const projectExists = projectName in Project.data
 
-    if (projectTitle.length > 0 && !projectExists) {
-      const projectUI = UI.createProject(projectTitle)
-      Project.add(projectTitle)
-
-      projectUI.addEventListener('click', (event) => {
-        event.stopPropagation()
-        this.showTasks(Project.get(projectTitle))
-        UI.hideMenu()
-
-        if (Project.currentProject !== projectTitle)
-          Project.currentProject = projectTitle
-      })
- 
-      projectUI.querySelector('.delete-project')
-        .addEventListener('click', (event) => {
-      alert('$')
-          event.stopPropagation()
-          Project.del(projectTitle)
-          UI.removeProject(projectUI)
-          Project.currentProject = 'default'
-          this.showTasks(Project.get())
-        })
-
-      UI.addProject(projectUI)
-      this.showTasks(Project.get(projectTitle))
-      projectTitleElement.value = ''
+    if (projectName.length > 0 && !projectExists) {
+      this.showProjects(projectName)
+      Project.currentProject = 'default'
+      this.showTasks(Project.get())
+      if (Project.currentProject !== projectName)
+        Project.currentProject = projectName
+      projectNameElement.value = ''
     } else if (projectExists) {
       alert('Caution: Project already exists!!')
-      this.showTasks(Project.get(projectTitle))
+      this.showTasks(Project.get(projectName))
     }
   },
 
@@ -167,4 +148,23 @@ export default {
     this.showTasks(Project.get())
   },
 
+  showProjects(projectName: string) {
+      const projectUI = UI.createProject(projectName)
+
+      projectUI.addEventListener('click', (event) => {
+        event.stopPropagation()
+        this.showTasks(Project.get(projectName))
+        UI.hideMenu()
+      })
+ 
+      projectUI.querySelector('.delete-project')
+        .addEventListener('click', (event) => {
+          event.stopPropagation()
+          Project.del(projectName)
+          UI.removeProject(projectUI)
+        })
+
+      UI.addProject(projectUI)
+      this.showTasks(Project.get(projectName))
+  }
 }

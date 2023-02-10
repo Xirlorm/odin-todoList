@@ -12,6 +12,7 @@ your simple tasks.
 - Checking todo lists as done when finished with them
 - Viewing "Today" tasks
 - Viewing a Checklist of tasks in terms of not completed first
+- Storage of todo tasks data locally
 
 This project is mainly to practice OPP, organizing code into modules,
 bundling with webpack, package management with npm and etc...

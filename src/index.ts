@@ -4,6 +4,7 @@
 import Project from './scripts/projects'
 import UI from './scripts/ui'
 import Lib from './scripts/lib'
+import Storage from './scripts/storage'
 // Stylesheet
 import './styles/style.css'
 
@@ -37,12 +38,13 @@ import './styles/style.css'
       } 
     })
 
-  // Create new project
+  // Show form input to create new project
   document.getElementById('create-project').addEventListener('click', (event) => {
       event.preventDefault()
       UI.setDisplay(document.querySelector('#project-form'), 'none')
       UI.showMenu()
       Lib.newProject()
+      document.getElementById('project-form').style.display = 'none'
     })
 
   // Whow confirmation menu when project deletion is triggered
@@ -94,6 +96,13 @@ import './styles/style.css'
     document.querySelector('#todo-form #due-date')
   dateInput.value = new Date().toISOString().slice(0,10)
 
-  // Display all tasks in the default project 
+  // Initialize todo memory
+  Project.initializeData()
+
+  // Show projects in project list
+  for (const project of Storage.getKeys())
+    Lib.showProjects(project)
+
+  // Show the default projects
   Lib.showTasks(Project.get())
 })()
