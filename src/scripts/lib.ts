@@ -11,13 +11,18 @@ const priority: HTMLInputElement = todoForm.querySelector('#priority')
 const note: HTMLInputElement = todoForm.querySelector('#note')
 
 export default {
-  // Add events to todo elements
-  addTaskEvents(task: HTMLElement) {
+  // Holder for tasks to edit
+  taskToEdit: todo,
+
+
+  // Add todo actions to it's UI
+  addTaskEvents(task: HTMLElement, taskData: todo) {
     const taskId = parseInt(task.getAttribute('data-todo-id'))
-    // Show details when title is clicked
+
+    // Show details of the task when title is clicked
     task.querySelector('.task-title').addEventListener('click', () => {
       const taskDetails: HTMLElement = task.querySelector('.task-details')
-      UI.toggleDisplay(taskDetails, 'block')
+      UI.setDisplay(taskDetails, 'block')
     })
     // Toggle status and show changes when status is clicked
     task.querySelector('.task-status').addEventListener('change', () => {
@@ -25,22 +30,55 @@ export default {
         .classList.toggle('finished-task')
       Project.toggleTodoStatus(Project.currentProject, taskId)
     })
-    // Delete a task
-    task.querySelector('.delete').addEventListener('click', () => {
+    // Delete task
+    task.querySelector('.remove-todo').addEventListener('click', () => {
       Project.deleteTodo(Project.currentProject, taskId)
       UI.taskList.removeChild(task)
+    })
+    // Edit task
+    task.querySelector('.edit-task').addEventListener('click', () => {
+      this.taskToEdit = taskData
+      const changeTodoBtn = document.getElementById('save-changes')
+      todoForm.style.display = 'block'
+      UI.setDisplay(changeTodoBtn, 'inline')
+      UI.setDisplay(document.getElementById('create-todo'), 'none')
+
+      title.value = taskData.title
+      dueDate.value = taskData.dueDate
+      title.value = taskData.title
+      note.value = taskData.note
+      priority.value = `${taskData.priority}`
+
     })
 
     return task
   },
 
+  editTask() {
+    todoForm.style.display = 'none'
+    UI.setDisplay(document.getElementById('create-todo'), 'inline')
+    UI.setDisplay(document.getElementById('save-changes'), 'none')
+    Project.updateTodo(
+      todo.new(
+        title.value,
+        dueDate.value,
+        parseInt(priority.value),
+        this.taskToEdit.isComplete,
+        note.value,
+        this.taskToEdit.id,
+      )
+    )
+    this.clearFormInput()
+    this.showTasks(Project.get(Project.currentProject))
+  },
 
   // Display a collection of todo to user
   showTasks(tasks: todo[]) {
     UI.taskList.textContent = ''
-
     tasks.forEach((task) => {
-      UI.taskList.appendChild(this.addTaskEvents(UI.newTaskUI(task)))
+      UI.taskList.appendChild(
+        this.addTaskEvents(UI.newTask(task), task)
+      )
     })
   },
 
@@ -49,14 +87,14 @@ export default {
   createTodo() {
     if (title.value.length < 1) return false
 
-    Project.addTodo(
-      Project.currentProject,
+    Project.addTodo( Project.currentProject,
       todo.new(
         title.value,
         dueDate.value,
         Number.parseInt(priority.value),
         false,
-        note.value
+        note.value,
+        Project.nextTaskId++,
       ) 
     )
 
@@ -73,6 +111,8 @@ export default {
     note.value = ''
   },
 
+
+  // Create new project
   newProject() {
     const projectTitleElement: HTMLInputElement =
       document.querySelector('#project-form #title')
@@ -85,9 +125,9 @@ export default {
 
       projectUI.addEventListener('click', (event) => {
         event.stopPropagation()
-
         this.showTasks(Project.get(projectTitle))
         UI.hideMenu()
+
         if (Project.currentProject !== projectTitle)
           Project.currentProject = projectTitle
       })
@@ -96,12 +136,12 @@ export default {
         .addEventListener('click', (event) => {
           event.stopPropagation()
           Project.del(projectTitle)
-          this.showTasks(Project.get('default'))
+          UI.removeProject(projectUI)
           Project.currentProject = 'default'
-          UI.projectList.removeChild(projectUI)
+          this.showTasks(Project.get())
         })
 
-      UI.projectList.appendChild(projectUI)
+      UI.addProject(projectUI)
       this.showTasks(Project.get(projectTitle))
       projectTitleElement.value = ''
     } else if (projectExists) {
@@ -110,17 +150,15 @@ export default {
     }
   },
 
+
   // Delete the current project
   deleteCurrentProject() {
     const project = UI.projectList.getElementsByTagName('li')
-    alert(project.length)
-
     for (let i = 0; i < project.length; ++i) {
       const projectName = project[i].getAttribute('data-project-name')
       if (projectName === Project.currentProject)
-        UI.projectList.removeChild(project[i])
+        UI.removeProject(project[i])
     }
-
     Project.del(Project.currentProject)
     Project.currentProject = 'default'
     this.showTasks(Project.get('default'))

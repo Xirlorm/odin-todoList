@@ -232,7 +232,7 @@ header form input[type='submit'] {
   font-weight: 500;
 }
 
-.delete {
+.remove-todo {
   padding: 0 0.6rem;
   color: var(--lavender);
   font-size: 2.1em;
