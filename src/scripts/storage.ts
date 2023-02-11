@@ -4,6 +4,7 @@ import todo from './todo'
 
 export default {
   storeTodoData(key: string, data: todo[]) {
+    localStorage.removeItem(key)
     localStorage.setItem(key, JSON.stringify(data))
   },
 

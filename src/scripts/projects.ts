@@ -34,7 +34,7 @@ export default class Project {
   static get(projectName = 'default'): todo[] {
     if (projectName in this.data)
       return this.data[projectName].map(t => t)
-    return [] as todo[]
+    return []
   }
 
 
@@ -55,11 +55,12 @@ export default class Project {
 
   
   // Add todo item to a project
-  static addTodo(projectName = 'default', value: todo) {
+  static addTodo(projectName: string, task: todo) {
+    task.project = projectName
     if (!(projectName in this.data))
       this.add(projectName)
 
-    this.data[projectName].push(value)
+    this.data[projectName].push(task)
     Storage.storeTodoData(projectName, this.get(projectName))
   }
 
@@ -67,22 +68,23 @@ export default class Project {
   // (Un)check todo task 
   static toggleTodoStatus(projectName: string, taskId: number) {
     this.data[projectName].forEach((task) => {
-      if (task.id == taskId) task.toggleCompletion
+      if (task.id === taskId)
+        task.isComplete = !task.isComplete
     })
     Storage.storeTodoData(projectName, this.get(projectName))
   }
 
   // Change todo task information
   static updateTodo(newTask: todo) {
-    this.data[this.currentProject] = 
-      this.data[this.currentProject].map((task) => {
+    this.data[newTask.project] = 
+      this.data[newTask.project].map((task) => {
         if (task.id === newTask.id)
           return newTask
         return task
       })
     Storage.storeTodoData(
-      this.currentProject,
-      this.get(this.currentProject)
+      newTask.project,
+      this.get(newTask.project)
     )
   }
   
@@ -102,13 +104,12 @@ export default class Project {
   }
 
   // Get tasks with today's date
-  static getTodayTasks(): todo[] {
+  static getTodayTasks() {
     const todayTasks: todo[] = []
     const today = new Date().toISOString().slice(0, 10)
-
-    Object.keys(this.data).forEach( project => {
-      this.data[project].forEach( (task) => {
-        if (task.dueDate == today)
+    Object.keys(this.data).forEach( (project) => {
+      this.data[project].forEach((task) => {
+        if (task.dueDate === today)
           todayTasks.push(task)
       })
     })
@@ -139,8 +140,10 @@ export default class Project {
     if (Storage.checkStorage)
       if (Storage.getSize() > 0) {
         Storage.getKeys().forEach(project => {
+          if (project === 'default') this.data['default'] = []
+
           Storage.getTodoData(project).forEach((task: todo) => {
-            Project.addTodo(project, task)
+            this.addTodo(project, task)
           })
         })
       }

@@ -28,7 +28,7 @@ export default {
     task.querySelector('.task-status').addEventListener('change', () => {
       task.querySelector('.task-title')
         .classList.toggle('finished-task')
-      Project.toggleTodoStatus(Project.currentProject, taskId)
+      Project.toggleTodoStatus(taskData.project, taskId)
     })
     // Delete task
     task.querySelector('.remove-todo').addEventListener('click', () => {
@@ -39,9 +39,10 @@ export default {
     task.querySelector('.edit-task').addEventListener('click', () => {
       this.taskToEdit = taskData
       const changeTodoBtn = document.getElementById('save-changes')
-      todoForm.style.display = 'block'
-      UI.setDisplay(changeTodoBtn, 'inline')
+      UI.setDisplay(todoForm, 'block')
+      changeTodoBtn.style.display = 'inline'
       UI.setDisplay(document.getElementById('create-todo'), 'none')
+      document.getElementById('project-form').style.display = 'none'
 
       title.value = taskData.title
       dueDate.value = taskData.dueDate
@@ -60,8 +61,7 @@ export default {
     todoForm.style.display = 'none'
     UI.setDisplay(document.getElementById('create-todo'), 'inline')
     UI.setDisplay(document.getElementById('save-changes'), 'none')
-    Project.updateTodo(
-      todo.new(
+    const task = todo.new(
         title.value,
         dueDate.value,
         parseInt(priority.value),
@@ -69,9 +69,10 @@ export default {
         note.value,
         this.taskToEdit.id,
       )
-    )
+    task.project = this.taskToEdit.project
+    Project.updateTodo(task)
     this.clearFormInput()
-    this.showTasks(Project.get(Project.currentProject))
+    this.showTasks(Project.get(task.project))
   },
 
   // Display a collection of todo to user
@@ -120,18 +121,21 @@ export default {
       document.querySelector('#project-form #title')
     const projectName = projectNameElement.value
     const projectExists = projectName in Project.data
+    projectNameElement.value = ''
 
     if (projectName.length > 0 && !projectExists) {
       this.showProjects(projectName)
-      Project.currentProject = 'default'
-      this.showTasks(Project.get())
+      Project.add(projectName)
+
       if (Project.currentProject !== projectName)
         Project.currentProject = projectName
-      projectNameElement.value = ''
+
+      this.showTasks(Project.get(projectName))
     } else if (projectExists) {
       alert('Caution: Project already exists!!')
       this.showTasks(Project.get(projectName))
-    }
+    } else if (projectName.length < 3)
+      alert('Error: Project name must be above two characters')
   },
 
 
@@ -145,26 +149,29 @@ export default {
     }
     Project.del(Project.currentProject)
     Project.currentProject = 'default'
+    this.showProjects('default')
     this.showTasks(Project.get())
   },
 
   showProjects(projectName: string) {
-      const projectUI = UI.createProject(projectName)
+    if (projectName == 'default') return;
+    const projectUI = UI.createProject(projectName)
 
-      projectUI.addEventListener('click', (event) => {
-        event.stopPropagation()
-        this.showTasks(Project.get(projectName))
-        UI.hideMenu()
-      })
- 
-      projectUI.querySelector('.delete-project')
-        .addEventListener('click', (event) => {
-          event.stopPropagation()
-          Project.del(projectName)
-          UI.removeProject(projectUI)
-        })
-
-      UI.addProject(projectUI)
+    projectUI.addEventListener('click', (event) => {
+      event.stopPropagation()
       this.showTasks(Project.get(projectName))
+      UI.hideMenu()
+    })
+
+    projectUI.querySelector('.delete-project')
+      .addEventListener('click', (event) => {
+        event.stopPropagation()
+        Project.del(projectName)
+        UI.removeProject(projectUI)
+        Project.currentProject = 'default'
+        this.showTasks(Project.get())
+      })
+
+    UI.addProject(projectUI)
   }
 }

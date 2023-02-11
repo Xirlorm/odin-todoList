@@ -1,12 +1,13 @@
-'use strict';
+'use strict'
 
 class todo {
-  title;
-  dueDate;
-  priority;
-  note;
-  isComplete;
-  id: number;
+  title
+  dueDate
+  priority
+  note
+  isComplete
+  id: number
+  project = 'default'
 
   constructor (
     title: string,
@@ -16,16 +17,12 @@ class todo {
     note = '',
     id: number
   ) {
-    this.title = title;
-    this.dueDate = dueDate;
-    this.priority = priority;
-    this.isComplete = isComplete;
-    this.note = note;
-    this.id = id;
-  }
-
-  toggleCompletion() {
-    this.isComplete = !this.isComplete;
+    this.title = title
+    this.dueDate = dueDate
+    this.priority = priority
+    this.isComplete = isComplete
+    this.note = note
+    this.id = id
   }
 
   static new( title: string,
@@ -45,4 +42,4 @@ class todo {
   }
 }
 
-export default todo;
+export default todo

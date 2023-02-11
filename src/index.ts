@@ -1,6 +1,6 @@
 'use strict'
 
-// Scripts 
+// Libraries and modules 
 import Project from './scripts/projects'
 import UI from './scripts/ui'
 import Lib from './scripts/lib'
@@ -10,6 +10,10 @@ import './styles/style.css'
 
 
 (function() {
+
+  const todoInputForm: HTMLElement = document.getElementById('todo-form')
+  const projectInputForm: HTMLElement = document.getElementById('project-form')
+
   // Toggle side menu display when menu button clicked 
   document.querySelector('.menu')
   .addEventListener('click', () => UI.showMenu())
@@ -20,12 +24,16 @@ import './styles/style.css'
 
   // Change visibility of todo input form
   document.querySelector('.add-btn').addEventListener('click', () => {
-      UI.setDisplay(document.querySelector('#todo-form'), 'block')
+      UI.setDisplay(todoInputForm, 'block')
+      UI.setDisplay(projectInputForm, 'none')
+      document.getElementById('save-changes').style.display = 'none'
+      document.getElementById('create-todo').style.display = 'inline'
     })
 
   // Show project input form when 'new project' button is clicked 
   document.getElementById('new-project').addEventListener('click', () => {
-      UI.setDisplay(document.querySelector('#project-form'), 'block')
+      todoInputForm.style.display = 'none'
+      UI.setDisplay(projectInputForm, 'block')
       UI.hideMenu()
     })
 
@@ -41,10 +49,9 @@ import './styles/style.css'
   // Show form input to create new project
   document.getElementById('create-project').addEventListener('click', (event) => {
       event.preventDefault()
-      UI.setDisplay(document.querySelector('#project-form'), 'none')
       UI.showMenu()
       Lib.newProject()
-      document.getElementById('project-form').style.display = 'none'
+      projectInputForm.style.display = 'none'
     })
 
   // Whow confirmation menu when project deletion is triggered
@@ -65,11 +72,10 @@ import './styles/style.css'
       UI.setDisplay(document.querySelector('.confirmation'), 'none')
     })
 
-  // Show default projects when default project is clicked
+  // Show default tasks when default project is clicked
   document.querySelector('#projects #default').addEventListener('click', () => {
-      Lib.showTasks(Project.get())
-      alert()
       Project.currentProject = 'default'
+      Lib.showTasks(Project.get())
       UI.hideMenu()
     })
   
@@ -87,8 +93,8 @@ import './styles/style.css'
 
   // Save changes to task
   document.getElementById('save-changes').addEventListener('click', (e) => {
-      Lib.editTask()
       e.preventDefault()
+      Lib.editTask()
     })
 
   // Set form date input value to current date 
@@ -99,9 +105,10 @@ import './styles/style.css'
   // Initialize todo memory
   Project.initializeData()
 
-  // Show projects in project list
-  for (const project of Storage.getKeys())
+  // Show all available projects
+  Storage.getKeys().forEach( project => {
     Lib.showProjects(project)
+  } )
 
   // Show the default projects
   Lib.showTasks(Project.get())
