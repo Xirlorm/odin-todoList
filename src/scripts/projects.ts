@@ -137,7 +137,7 @@ export default class Project {
   }
 
   static initializeData() {
-    if (Storage.checkStorage)
+    if (Storage.checkStorage('localStorage'))
       if (Storage.getSize() > 0) {
         Storage.getKeys().forEach(project => {
           if (project === 'default') this.data['default'] = []
