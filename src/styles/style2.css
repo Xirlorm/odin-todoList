@@ -1,0 +1,14 @@
+aside.show-menu {
+  visibility: visible;
+  width: clamp(1rem, 20rem, 25rem);
+}
+
+.show-todo-form {
+  visibility: visible;
+  height: 17rem;
+}
+
+.show-project-form {
+  visibility: visible;
+  height: 5rem;
+}

@@ -1,10 +1,11 @@
 'use strict'
 
 import todo from './todo'
+import '../styles/style2.css'
 
 export default {
-  taskList: document.getElementById('tasks-list'),
-  projectList: document.getElementById('projects'),
+  taskList: document.querySelector('main'),
+  projectList: document.querySelector('.projects-list'),
 
 
   newTask(todo: todo) {
@@ -114,15 +115,22 @@ export default {
 
   showMenu() {
     const aside = document.querySelector('aside')
-    this.setDisplay(aside, 'block')
+    // this.setDisplay(aside, 'block')
     document.querySelector('main').style.opacity = '0.2'
+    document.querySelector('main').setAttribute('readonly', 'true')
     document.querySelector('header').style.opacity = '0.2'
+    document.querySelector('header').setAttribute('readonly', 'true')
+    aside.classList.toggle('show-menu')
   },
 
 
   hideMenu() {
-      this.setDisplay(document.querySelector('aside'), 'none')
-      document.querySelector('main').style.opacity = '1'
-      document.querySelector('header').style.opacity = '1'
+    const aside = document.querySelector('aside')
+    // this.setDisplay(aside, 'none')
+    document.querySelector('main').style.opacity = '1'
+    document.querySelector('main').setAttribute('readonly', 'false')
+    document.querySelector('header').style.opacity = '1'
+    document.querySelector('header').setAttribute('readonly', 'false')
+    aside.classList.toggle('show-menu')
   },
 }

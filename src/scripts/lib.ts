@@ -39,10 +39,12 @@ export default {
     task.querySelector('.edit-task').addEventListener('click', () => {
       this.taskToEdit = taskData
       const changeTodoBtn = document.getElementById('save-changes')
-      UI.setDisplay(todoForm, 'block')
+      todoForm.classList.toggle('show-todo-form')
+      // UI.setDisplay(todoForm, 'block')
       changeTodoBtn.style.display = 'inline'
       UI.setDisplay(document.getElementById('create-todo'), 'none')
-      document.getElementById('project-form').style.display = 'none'
+      // document.getElementById('project-form').style.display = 'none'
+      document.getElementById('project-form').classList.remove('show-project-form')
 
       title.value = taskData.title
       dueDate.value = taskData.dueDate
@@ -120,7 +122,7 @@ export default {
     const projectNameElement: HTMLInputElement =
       document.querySelector('#project-form #title')
     const projectName = projectNameElement.value
-    const projectExists = projectName in Project.data
+    const projectExists = Project.hasProject(projectName)
     projectNameElement.value = ''
 
     if (projectName.length > 0 && !projectExists) {

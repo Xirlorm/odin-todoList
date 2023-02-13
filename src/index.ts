@@ -7,10 +7,10 @@ import Lib from './scripts/lib'
 import Storage from './scripts/storage'
 // Stylesheet
 import './styles/style.css'
+import './styles/style2.css'
 
 
 (function() {
-
   const todoInputForm: HTMLElement = document.getElementById('todo-form')
   const projectInputForm: HTMLElement = document.getElementById('project-form')
 
@@ -24,16 +24,19 @@ import './styles/style.css'
 
   // Change visibility of todo input form
   document.querySelector('.add-btn').addEventListener('click', () => {
-      UI.setDisplay(todoInputForm, 'block')
-      UI.setDisplay(projectInputForm, 'none')
+      // UI.setDisplay(todoInputForm, 'block')
+      // UI.setDisplay(projectInputForm, 'none')
+      todoInputForm.classList.toggle('show-todo-form')
+      projectInputForm.classList.remove('show-project-form')
       document.getElementById('save-changes').style.display = 'none'
       document.getElementById('create-todo').style.display = 'inline'
     })
 
   // Show project input form when 'new project' button is clicked 
   document.getElementById('new-project').addEventListener('click', () => {
-      todoInputForm.style.display = 'none'
-      UI.setDisplay(projectInputForm, 'block')
+      todoInputForm.classList.remove('show-todo-form')
+      projectInputForm.classList.toggle('show-project-form')
+      // UI.setDisplay(projectInputForm, 'block')
       UI.hideMenu()
     })
 
@@ -48,10 +51,11 @@ import './styles/style.css'
 
   // Show form input to create new project
   document.getElementById('create-project').addEventListener('click', (event) => {
+      todoInputForm.classList.remove('show-todo-form')
+      projectInputForm.classList.toggle('show-project-form')
       event.preventDefault()
       UI.showMenu()
       Lib.newProject()
-      projectInputForm.style.display = 'none'
     })
 
   // Whow confirmation menu when project deletion is triggered
@@ -73,7 +77,7 @@ import './styles/style.css'
     })
 
   // Show default tasks when default project is clicked
-  document.querySelector('#projects #default').addEventListener('click', () => {
+  document.querySelector('.projects-list #default').addEventListener('click', () => {
       Project.currentProject = 'default'
       Lib.showTasks(Project.get())
       UI.hideMenu()

@@ -19,7 +19,12 @@ body {
 
 
 /***************** Header Styles *****************/
-#hero {
+header,
+main {
+  transition: opacity .6s ease-in-out .1s;
+}
+
+header > section {
   display: flex;
   justify-content: space-between;
   align-content: center;
@@ -29,15 +34,15 @@ body {
   border: 1px solid var(--lavender);
 }
 
-/* Custom humburger menu styling */
-#hero .menu {
+/* Custom hamburger menu styling */
+header > section .menu {
   margin: 0.8rem;
   background-color: #313852;
   padding: 0.4rem 0.4rem 0.2rem;
   border-radius: 0.3rem;
 }
 
-#hero .menu > div {
+header > section .menu > div {
   border-radius: 4px;
   width: 1.8rem;
   height: 0.3rem;
@@ -46,7 +51,7 @@ body {
   box-shadow: 3px 3px 4px #323, inset -1px -1px 4px var(--lavender2);
 }
 
-#hero h1 {
+header > section h1 {
   margin: 0.8rem 0.9rem;
   font-family: sans-serif;
   font-size: 2em;
@@ -84,17 +89,18 @@ body {
 
 
 /***************** Header form inputs *****************/
-header form {
-  display: none;
+form {
+  visibility: hidden;
+  height: 0;
   text-align: center;
   margin-top: 0.6rem;
+  transition: height .6s ease-in-out .3s,
+              visibility .3s ease-in-out .1s;
 }
 
-header form li {
-  list-style-type: none;
-}
+form li { list-style-type: none; }
 
-header form *:is(input, textarea, select) {
+form *:is(input, textarea, select) {
   -webkit-appearance: none;
   appearance: none;
   background-color: var(--dark-gray1);
@@ -109,18 +115,14 @@ header form *:is(input, textarea, select) {
   width: 18.2rem;
 }
 
-input[type="date"] {
-  padding-left: 6.4em;
-}
+input[type="date"] { padding-left: 6.4em; }
 
-header form *:is(input, textarea, select):is(:focus, :active) {
+header form :is(input, textarea, select):is(:focus, :active) {
   outline-color: var(--lavender);
   border: none;
 }
 
-header form :is(input, textarea)::placeholder {
-  color: #3bc;
-}
+header form :is(input, textarea)::placeholder { color: #3bc; }
 
 header form input[type='submit'] {
   border: none;
@@ -137,12 +139,12 @@ header form input[type='submit'] {
 
 
 /***************** Todo list items & container styling *****************/
-#tasks-list {
+main {
   margin: 1rem 0.4rem 0;
   padding: 0.2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(365px, 400px));
   grid-gap: 0.2rem;
+  grid-template-columns: repeat(auto-fit, minmax(365px, 400px));
   justify-content: center;
 }
 
@@ -270,16 +272,19 @@ aside {
   position: fixed;
   top: 0;
   bottom: 0;
-  min-width: 19rem;
+  width: 1rem;
   background-color: var(--dark-gray1);
   color: var(--light-gray);
   z-index: 1;
-  display: none;
+  margin-right: 4rem;
+  visibility: hidden;
   font-family: sans-serif;
   border-top-right-radius: 0.4rem;
   border-bottom-right-radius: 0.4rem;
   height: 100%;
   overflow-y: scroll;
+  transition: visibility .5s ease-in-out .1s,
+              width .5s ease-in-out .2s;
 }
 
 .exit-nav {
@@ -299,6 +304,7 @@ aside {
 aside > section:first-child {
   display: flex;
   justify-content: space-between;
+  flex-wrap: nowrap;
   margin: 0.2rem 0 0.2rem 0.6rem;
 }
 
@@ -310,19 +316,13 @@ aside > section:first-child {
   padding: 0.2rem 0 0 0.6rem;
 }
 
-.side-nav > div:nth-last-child(2) {
-  padding-bottom: 0.8rem;
-}
+.side-nav > div:nth-last-child(2) { padding-bottom: 0.8rem; }
 
-#projects > li#default {
-  padding: 0.60rem 0.5rem;
-}
+.projects-list > li#default { padding: 0.60rem 0.5rem; }
 
-#projects > li:nth-child(1n + 2) {
-  padding: 0.15rem 0.5rem;
-}
+.projects-list > li:nth-child(1n + 2) { padding: 0.15rem 0.5rem; }
 
-#projects > li {
+.projects-list > li {
   list-style-type: none;
   margin: 0.2rem 0.8rem;
   /* padding: 0.15rem 1rem 0.6rem 1rem; */
@@ -334,9 +334,10 @@ aside > section:first-child {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  flex-wrap:  nowrap;
 }
 
-#projects > li .delete-project {
+.projects-list > li .delete-project {
   margin: 0 0.3rem 0 0;
   font-size: 1.8rem;
   color: var(--lavender);
@@ -344,7 +345,7 @@ aside > section:first-child {
   border: none;
 }
 
-#projects > li div {
+.projects-list > li div {
   max-width: 15rem;
   white-space: nowrap;
   overflow-x: hidden;
@@ -359,7 +360,13 @@ aside > section:first-child {
   border-top: 1px solid #434;
 }
 
-.manage-tasks > button {
+.manage-tasks > div {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}
+
+.manage-tasks > div button {
   padding: 0.7rem 0.6rem;
   width: 8rem;
 }
