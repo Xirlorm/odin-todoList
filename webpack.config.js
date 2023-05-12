@@ -6,11 +6,6 @@ module.exports = {
   mode: 'development',
   entry: {
     index: './src/index.ts',
-    lib: './src/scripts/lib.ts',
-    ui: './src/scripts/ui.ts',
-    todo: './src/scripts/todo.ts',
-    storage: './src/scripts/storage.ts',
-    projects: './src/scripts/projects.ts'
   },
   devtool: 'inline-source-map',
   devServer: {

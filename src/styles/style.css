@@ -98,6 +98,10 @@ form {
               visibility .3s ease-in-out .1s;
 }
 
+#todo-form {
+	margin-bottom: 2em;
+}
+
 form li { list-style-type: none; }
 
 form *:is(input, textarea, select) {
@@ -272,7 +276,7 @@ aside {
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 1rem;
+  width: .5rem;
   background-color: var(--dark-gray1);
   color: var(--light-gray);
   z-index: 1;

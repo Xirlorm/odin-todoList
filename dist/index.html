@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="@xirlorm">
+  <meta name="title" content="Just do it">
+  <meta name="description" content="Todo list web app">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>Just do it</title>
+<script defer src="runtime.bundle.js"></script><script defer src="index.bundle.js"></script></head>
+<body>
+  <header>
+    <section>
+      <div class="menu">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <h1 class="logo"><span class="design">·</span> Just Do It!</h1>
+    </section>
+
+    <form id="todo-form">
+      <li>
+        <input id="title" required type="text" placeholder="Title">
+      </li>
+      <li>
+        <input value="2023-01-01" id="due-date" required type="date">
+      </li>
+      <li>
+        <select required id="priority">
+          <option disabled selected value="0">Priority</option>
+          <option value="3">High</option>
+          <option value="2">Medium</option>
+          <option value="1">Low</option>
+        </select>
+      </li>
+      <li>
+        <textarea placeholder="Note" id="note" name="" rows="5">
+        </textarea>
+      </li>
+      <li>
+        <input type="submit" value="Add todo" id="create-todo">
+      </li>
+      <li>
+        <input type="submit" value="Save changes"
+        id="save-changes" style="display:none">
+      </li>
+    </form>
+
+    <form id="project-form">
+      <li>
+        <input id="title" required type="text"
+        placeholder="Project Title">
+      </li>
+      <li>
+        <input id="create-project" type="submit" value="Add Project">
+      </li>
+    </form>
+
+    <!-- Add todo item button -->
+    <div class="add-btn">+</div>
+  </header>
+
+
+  <!-- Side Navigation Menu -->
+  <aside>
+    <section>
+      <h2 class="logo"> <span class="design">·</span> Just Do It! </h2>
+      <button class="exit-nav">×</button>
+    </section>
+    <section class='side-nav'>
+      <div class='nav' id="today-tasks"> Today </div>
+      <div class='nav' id="checklist"> Checklist </div>
+      <div>
+        <section class="projects-list">
+          <section class="manage-tasks">
+            <div>
+              <button id="new-project">+ New project</button>
+              <button id="delete-project">× Delete project</button>
+            </div>
+            <section class="confirmation">
+              Are you sure you want to delete current project?<br>
+              <button id="yes">Yes</button>
+              <button id="no">No</button>
+            </section>
+          </section>
+          <li id="default"> Default </li>
+        </section>
+      </div>
+    </section>
+  </aside>
+
+  <!-- Todo List Container -->
+  <main id="tasks-list"></main>
+</body>
+</html>
