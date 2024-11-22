@@ -1,9 +1,12 @@
-# ·Just do it!
-### odin-todoList
+# ·Just do it
+
+## odin-todoList
+
 An odin project. A simple and useful todo list web application to manage
 your simple tasks.
 
-### Features
+## Features
+
 - Organizing todo lists into projects
 - Deleting projects
 - Adding notes to todo lists
