@@ -1,20 +1,265 @@
 header {
-    background-color: rgb(0, 0, 0);
-    margin: 0;
-    padding: 0.6rem;
-    color:  white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  color: white;
+  margin: 0.4rem;
+  padding: 0.4rem 0.4rem;
+  border-radius: 0.5rem;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 header h1 {
-    font-family: sans-serif;
+  color: #3694db;
+  font-family: sans-serif;
+  margin: 0.4rem 0;
+  font-weight: 700;
+  font-size: 1.7rem;
+}
+
+header .date {
+  font-weight: 600;
+  color: #80b3e5;
+  font-size: 0.8rem;
 }
 
 header button {
-    background: transparent;
-    color: white;
-    border: none;
-    padding: 0;
+  background-color: transparent;
+  color: white;
+  border: none;
+  margin: 0;
+}
+
+header .active-page {
+  background-color: #3690d4;
+  padding: 0.3rem 0.4rem;
+  border-radius: 0.2rem;
+}
+
+.days {
+  margin: 0.6rem auto;
+  max-width: 480px;
+  padding: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  /* border-radius: .4rem; */
+  /* background-color: #031930; */
+}
+
+.days li {
+  list-style-type: none;
+}
+
+.days button {
+  width: 38px;
+  background: transparent;
+  border: none;
+  color: #b3d6f9;
+  padding-block: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.days .active button {
+  /* background: linear-gradient(45deg, #3694db, #1867a3); */
+  background-color: #3694db;
+  color: rgb(255, 255, 255);
+  border-radius: 0.2rem;
+  font-weight: 600;
+}
+
+.todo-input,
+.todo-input form {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.todo-input input {
+  background-color: #193149;
+  color: rgb(232, 209, 238);
+  border: none;
+  outline: none;
+  padding: 0.6rem;
+  margin: 0.2rem;
+  font-size: 0.9rem;
+  border-radius: 1.2rem;
+  min-width: 220px;
+}
+
+.todo-input input::placeholder {
+  color: #5980aa;
+}
+
+.todo-input button {
+  border: none;
+  aspect-ratio: 1;
+  padding: 0.2;
+  border-radius: 1.2rem;
+}
+
+.todo-list {
+  margin: 1.2rem 0.8rem;
+  align-items: stretch;
+}
+
+.todo {
+  margin: 0.5rem auto;
+  background: linear-gradient(45deg, #5e87bd, #2860a8);
+  border-radius: 0.4rem;
+  padding: 0.5rem 0.3rem;
+  max-width: 500px;
+}
+
+.todo > section:first-child {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.todo input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #b3d6f9;
+  border: none;
+  border-radius: 0.6rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0.1rem;
+}
+
+.todo input[type="checkbox"]:checked {
+  background-color: #163d66;
+}
+
+.title {
+  margin: 0;
+  font-weight: 300;
+  font-size: 0.95rem;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #ccf7ff;
+}
+
+.completed {
+  background: #1e538b;
+}
+
+.completed h3 {
+  text-decoration: line-through;
+}
+
+.completed .time,
+.completed button,
+.completed h3,
+.completed .description {
+  color: #708ba7;
+}
+
+.completed span.priority {
+  background: #708ba7;
+}
+
+.time {
+  color: #8fcbf8;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.delete-btn {
+  border: none;
+  color: white;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  border-radius: 0.3rem;
+  color: white;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.description {
+  margin: 0.4rem 0.2rem;
+  font-size: 0.9rem;
+  color: #bddbf1;
+}
+
+.priority {
+  border: none;
+  background-color: rgb(187, 187, 252);
+  width: 0.3rem;
+  height: 0.4rem;
+  border-radius: 0.4rem;
+}
+
+.priority select {
+  display: none;
+}
+
+.priority.medium {
+  background-color: rgb(72, 248, 72);
+}
+
+.priority.high {
+  background-color: rgb(253, 132, 132);
+}
+
+.hide {
+  display: none;
+}
+
+.task-editor {
+  display: flex;
+  align-items: center;
+  flex-flow: wrap column;
+  padding-block: 1rem;
+}
+
+.task-editor input,
+.task-editor textarea,
+.task-editor select {
+  background: #1d5999;
+  border: none;
+  margin: 0.2rem;
+  color: white;
+  border-radius: 0.4rem;
+}
+
+.task-editor input:focus,
+.task-editor textarea:focus,
+.task-editor select:focus {
+  outline: none;
+  background-color: #1d5999;
+}
+
+.task-editor input[type="text"] {
+  min-width: 280px;
+  padding: 0.6rem 0.4rem;
+}
+
+.task-editor textarea {
+  min-width: 280px;
+  height: 4rem;
+  scrollbar-width: thin;
+  padding: 0.6rem 0.4rem;
+}
+
+.task-editor button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.4rem;
+  color: #333;
+  background: #80b3e5;
+  font-weight: 600;
 }

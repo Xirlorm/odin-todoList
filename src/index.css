@@ -1,9 +1,26 @@
+:root {
+  --bg-primary: #233a59;
+  --fg-primary: #ffffff;
+  --bg-secondary: #031930;
+  --calender-bg: #000000;
+  --calender-fg: #ffffff;
+  --icons: #000000;
+  --input-bg: #000000;
+  --input-fg: #000000;
+  --task-bg: #000000;
+  --task-fg: #000000;
+  --task-title: #ffffff;
+}
+
 :root,
 body,
 .body {
-    margin: 0;
+  margin: 0;
+  background-color: var(--bg-primary);
+  color: var(--fg-primary);
+  font-family: sans-serif;
 }
 
 h1 {
-    margin: 0.1rem;
+  margin: 0.1rem;
 }
