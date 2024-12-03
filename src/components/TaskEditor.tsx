@@ -38,12 +38,12 @@ function TaskEditor({ task, setTodoList, setEditTask }: TaskEditorArgs) {
         ></textarea>
       </div>
       <div>
-        {/* <input
+        <input
           type="time"
           placeholder="none"
           value={time}
-          onChange={({ target }) => setTime(target.value)}
-        /> */}
+          onChange={({ target }) => {setTime(target.value)}}
+        />
         <select
           name=""
           id=""
@@ -55,15 +55,18 @@ function TaskEditor({ task, setTodoList, setEditTask }: TaskEditorArgs) {
           <option value="low" selected>
             low
           </option>
-          <option value="high">high</option>
           <option value="medium">medium</option>
+          <option value="high">high</option>
         </select>
       </div>
       <button
         type="submit"
         onClick={() => {
+          const date = task.date;
+          date.setHours(parseInt(time.split(':')[0]))
+          date.setMinutes(parseInt(time.split(':')[1]))
           setTodoList((list) =>
-            editTodo(list, { ...task, title, description, priority })
+            editTodo(list, { ...task, title, description, date, priority })
           );
           setEditTask(false);
         }}
