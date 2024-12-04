@@ -41,29 +41,8 @@ export const demo = [
   },
 ];
 
-// Toggle a task's completion in the todolist
-export function toggleCompletion(target: Todo, todoList: Map<string, Todo[]>) {
-  const updatedList = new Map<string, Todo[]>();
-
-  for (const key of todoList.keys()) {
-    const list = todoList.get(key)?.map((task) => {
-      if (task.id === target.id)
-        return { ...task, completed: !target.completed };
-
-      return task;
-    });
-
-    updatedList.set(key, list as Todo[]);
-  }
-
-  return updatedList;
-}
-
 // Edit a todo task's values
-export function editTodo(
-  todoList: Map<string, Todo[]>,
-  target: Todo,
-) {
+export function editTodo(todoList: Map<string, Todo[]>, target: Todo) {
   const updatedList = new Map<string, Todo[]>();
 
   for (const key of todoList.keys()) {
@@ -103,16 +82,9 @@ export function sortByPriority(list: Todo[]): Todo[] {
   const medium = [] as Todo[];
 
   list.forEach((task) => {
-    switch (task.priority) {
-      case "low":
-        low.push(task);
-        break;
-      case "medium":
-        medium.push(task);
-        break;
-      default:
-        high.push(task);
-    }
+    if (task.priority == "low") low.push(task);
+    else if (task.priority == "medium") medium.push(task);
+    else high.push(task);
   });
 
   return [...high, ...medium, ...low];
@@ -134,3 +106,49 @@ export function sortByCompletion(list: Todo[]): Todo[] {
 // Sort a todo list
 export const sortTodoList = (list: Todo[]) =>
   sortByCompletion(sortByPriority(list));
+
+export function isLocalStorageAvailable() {
+  const test = "test";
+  try {
+    localStorage.setItem(test, test);
+    localStorage.getItem(test);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// Store Tasks
+export function storeTasksToStorage(todoList: Map<string, Array<Todo>>) {
+  const jsonArg = {} as { [key: string]: Todo[] };
+
+  for (const key of todoList.keys()) {
+    const tasks = todoList.get(key);
+
+    if (tasks !== undefined) jsonArg[key as string] = tasks;
+  }
+
+  localStorage.setItem("todo-list", JSON.stringify(jsonArg));
+}
+
+// Fetch the todolist from storage
+export function readTasksFromStorage() {
+  const todoListJSON = localStorage.getItem("todo-list");
+
+  if (todoListJSON != null) {
+    const todoObj = JSON.parse(todoListJSON);
+
+    return new Map(
+      Object.keys(todoObj).map((entry) => [
+        entry,
+        (todoObj[entry] as Todo[]).map((task) => {
+          task.date = new Date(task.date);
+
+          return task;
+        }),
+      ])
+    );
+  }
+
+  return todoListJSON;
+}

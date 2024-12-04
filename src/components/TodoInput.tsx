@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import Todo from "../utilities/types";
 import { Plus } from "react-feather";
+import { storeTasksToStorage } from "../utilities/lib";
 
 interface TodoInputArg {
   show: boolean;
@@ -50,6 +51,8 @@ function TodoInput({ show, setTodoList, date }: TodoInputArg) {
 
                 if (newList.has(date)) newList.get(date).push(todo);
                 else newList.set(date, [todo]);
+
+                storeTasksToStorage(newList)
 
                 return newList;
               });

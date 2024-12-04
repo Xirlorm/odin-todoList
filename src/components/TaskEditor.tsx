@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import Todo from "../utilities/types";
 import "../App.css";
-import { editTodo } from "../utilities/lib";
+import { editTodo, storeTasksToStorage } from "../utilities/lib";
 
 interface TaskEditorArgs {
   task: Todo;
@@ -42,7 +42,9 @@ function TaskEditor({ task, setTodoList, setEditTask }: TaskEditorArgs) {
           type="time"
           placeholder="none"
           value={time}
-          onChange={({ target }) => {setTime(target.value)}}
+          onChange={({ target }) => {
+            setTime(target.value);
+          }}
         />
         <select
           name=""
@@ -63,11 +65,19 @@ function TaskEditor({ task, setTodoList, setEditTask }: TaskEditorArgs) {
         type="submit"
         onClick={() => {
           const date = task.date;
-          date.setHours(parseInt(time.split(':')[0]))
-          date.setMinutes(parseInt(time.split(':')[1]))
-          setTodoList((list) =>
-            editTodo(list, { ...task, title, description, date, priority })
-          );
+          date.setHours(parseInt(time.split(":")[0]));
+          date.setMinutes(parseInt(time.split(":")[1]));
+          setTodoList((list) => {
+            const updatedList = editTodo(list, {
+              ...task,
+              title,
+              description,
+              date,
+              priority,
+            });
+            storeTasksToStorage(updatedList);
+            return updatedList;
+          });
           setEditTask(false);
         }}
       >

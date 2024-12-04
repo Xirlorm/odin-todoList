@@ -7,13 +7,17 @@ import TodoList from "./components/TodoList";
 import TodoInput from "./components/TodoInput";
 import { format } from "date-fns";
 import AllTodoTasks from "./components/AllTodoTasks";
-import { demo } from "./utilities/lib";
+import { demo, readTasksFromStorage } from "./utilities/lib";
 
 function App() {
   const today = new Date();
   const [currentDate, setCurrentDate] = useState(format(today, "LLL d uuuu"));
   const [todoList, setTodoList] = useState(
-    new Map([demo].map((todo) => [currentDate, todo])) as Map<string, Todo[]>
+    readTasksFromStorage() ||
+      (new Map([demo].map((todo) => [currentDate, todo])) as Map<
+        string,
+        Todo[]
+      >)
   );
   const [showTodoInput, setShowTodoInput] = useState(true);
   const [page, setPage] = useState("home" as "home" | "list-all");

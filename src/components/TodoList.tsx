@@ -14,7 +14,7 @@ function TodoList({ list, setTodoList }: TodoListArg) {
   return (
     <section className="todo-list">
       {list.map((todo) => (
-        <Task detail={todo} setTodoList={setTodoList} />
+        <Task task={todo} setTodoList={setTodoList} />
       ))}
     </section>
   );

@@ -226,6 +226,11 @@ header .active-page {
   padding-block: 1rem;
 }
 
+.task-editor > div {
+  margin: .2rem;
+  padding: 0;
+}
+
 .task-editor input,
 .task-editor textarea,
 .task-editor select {
@@ -244,19 +249,29 @@ header .active-page {
 }
 
 .task-editor input[type="text"] {
-  min-width: 280px;
+  min-width: 260px;
   padding: 0.6rem 0.4rem;
 }
 
 .task-editor textarea {
-  min-width: 280px;
+  min-width: 260px;
   height: 4rem;
   scrollbar-width: thin;
   padding: 0.6rem 0.4rem;
+  margin: 0;
+}
+
+.task-editor input[type='time'] {
+  padding: .3rem;
+}
+
+.task-editor select {
+  padding: .4rem;
 }
 
 .task-editor button {
   padding: 0.5rem 1rem;
+  margin: .2rem;
   border: none;
   border-radius: 0.4rem;
   color: #333;
