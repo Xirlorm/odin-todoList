@@ -7,13 +7,12 @@ your simple tasks.
 
 ## Features
 
-- Organizing todo lists into projects
-- Deleting projects
-- Adding notes to todo lists
-- Dating todo lists
+- Organizing todo lists by a 7 day calender
+- Adding Description to todo tasks
+- Adding time to todo tasks
+- Deleting tasks
 - Editing todo lists
-- Checking todo lists as done when finished with them
-- Viewing "Today" tasks
+- Marking todo lists when done with them
 - Viewing a Checklist of tasks in terms of not completed first
 - Storage of todo tasks data locally
 
