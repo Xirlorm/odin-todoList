@@ -1,14 +1,7 @@
-import { format } from "date-fns";
 import Todo from "./types";
 
-// Returns a string of the current date
-export function getDate() {
-  const today = new Date();
-  return `${format(today, "eee LLL d yyy")}`;
-}
-
 // Demo todo tasks showing user how to use app
-export const demo = [
+const demoTasks = [
   {
     title: "Click here to view more about tasks",
     date: new Date(),
@@ -40,6 +33,36 @@ export const demo = [
     id: "125",
   },
 ];
+
+// Fetch demo tasks
+export function demo(date: string) {
+  return new Map([demoTasks].map((todo) => [date, todo]));
+}
+
+// Add a new task to list
+export function addTaskToList(
+  list: Map<string, Todo[]>,
+  title: string,
+  date: string
+) {
+  const updatedList = new Map();
+  const todo = {
+    title,
+    description: "",
+    id: `${new Date().getTime()}`,
+    date: new Date(date),
+    completed: false,
+    priority: "low",
+  };
+
+  for (const key of list.keys())
+    updatedList.set(key, [...(list.get(key) ?? [])]);
+
+  if (updatedList.has(date)) updatedList.get(date).push(todo);
+  else updatedList.set(date, [todo]);
+
+  return updatedList;
+}
 
 // Edit a todo task's values
 export function editTodo(todoList: Map<string, Todo[]>, target: Todo) {

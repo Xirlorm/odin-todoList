@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import Todo from "../utilities/types";
 import { Plus } from "react-feather";
-import { storeTasksToStorage } from "../utilities/lib";
+import { addTaskToList, storeTasksToStorage } from "../utilities/lib";
 
 interface TodoInputArg {
   show: boolean;
@@ -31,30 +31,13 @@ function TodoInput({ show, setTodoList, date }: TodoInputArg) {
           <button
             onClick={(event) => {
               event.preventDefault();
-              setTodoList((list: Map<string, Todo[]>) => {
-                if (title.trim() == "") return list;
+              setTodoList((list) => {
+                if (title.trim() !== "") {
+                  list = addTaskToList(list, title, date);
+                  storeTasksToStorage(list);
+                }
 
-                const newList = new Map();
-                const id = new Date().getTime();
-                const todo = {
-                  title,
-                  description: "",
-                  completed: false,
-                  id,
-                  date: new Date(date),
-                  priority: "low",
-                  mapKey: date,
-                };
-
-                for (const key of list.keys())
-                  newList.set(key, [...(list.get(key) ?? [])]);
-
-                if (newList.has(date)) newList.get(date).push(todo);
-                else newList.set(date, [todo]);
-
-                storeTasksToStorage(newList)
-
-                return newList;
+                return list;
               });
               setTitle("");
             }}

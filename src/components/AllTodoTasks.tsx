@@ -4,12 +4,11 @@ import TodoList from "./TodoList";
 
 interface AllTodoTasksArg {
   todoList: Map<string, Todo[]>;
-  setPage: Dispatch<SetStateAction<"home" | "list-all">>;
-  setTodoList: Dispatch<SetStateAction<Map<string, Todo[]>>>
+  setTodoList: Dispatch<SetStateAction<Map<string, Todo[]>>>;
 }
 
 function AllTodoTasks({ todoList, setTodoList }: AllTodoTasksArg) {
-  const allTasks: Todo[] = [...todoList.values()]?.flat() ?? [];
+  const allTasks: Todo[] = [...todoList.values()].flat();
 
   return <TodoList list={allTasks} setTodoList={setTodoList} />;
 }

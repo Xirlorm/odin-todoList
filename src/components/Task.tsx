@@ -35,13 +35,13 @@ function Task({ task, setTodoList }: TodoArg) {
           type="checkbox"
           onClick={(event) => {
             setTodoList((list) => {
-              const newList = editTodo(list, {
+              list = editTodo(list, {
                 ...task,
                 completed: !task.completed,
               });
-              storeTasksToStorage(newList);
+              storeTasksToStorage(list);
 
-              return newList;
+              return list;
             });
             event.stopPropagation();
           }}
@@ -50,20 +50,23 @@ function Task({ task, setTodoList }: TodoArg) {
         <h3 className="title">{task.title}</h3>
         <span className="time">{format(task.date, "paa")}</span>
         <span className={`priority ${task.priority}`}></span>
-        <button className="edit-btn" onClick={() => {
-          console.log(typeof task.date)
-          setEditTask(!editTask)}
-        }>
+        <button
+          className="edit-btn"
+          onClick={(event) => {
+            setEditTask(!editTask);
+            event.stopPropagation();
+          }}
+        >
           <Edit2 size={"1rem"} />
         </button>
         <button
           className="delete-btn"
           onClick={(event) => {
             setTodoList((list) => {
-              const updateList = removeTodo(task, list);
-              storeTasksToStorage(updateList);
+              list = removeTodo(task, list);
+              storeTasksToStorage(list);
 
-              return updateList;
+              return list;
             });
             event.stopPropagation();
           }}

@@ -13,18 +13,19 @@ function App() {
   const today = new Date();
   const [currentDate, setCurrentDate] = useState(format(today, "LLL d uuuu"));
   const [todoList, setTodoList] = useState(
-    readTasksFromStorage() ||
-      (new Map([demo].map((todo) => [currentDate, todo])) as Map<
-        string,
-        Todo[]
-      >)
+    (readTasksFromStorage() ?? demo(currentDate)) as Map<string, Array<Todo>>
   );
   const [showTodoInput, setShowTodoInput] = useState(true);
   const [page, setPage] = useState("home" as "home" | "list-all");
 
   return (
     <>
-      <Header setShowInput={setShowTodoInput} page={page} setPage={setPage} />
+      <Header
+        setShowInput={setShowTodoInput}
+        page={page}
+        setPage={setPage}
+        date={today}
+      />
       {page == "home" ? (
         <>
           <Calender

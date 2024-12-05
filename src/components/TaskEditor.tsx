@@ -68,15 +68,15 @@ function TaskEditor({ task, setTodoList, setEditTask }: TaskEditorArgs) {
           date.setHours(parseInt(time.split(":")[0]));
           date.setMinutes(parseInt(time.split(":")[1]));
           setTodoList((list) => {
-            const updatedList = editTodo(list, {
+            list = editTodo(list, {
               ...task,
               title,
               description,
               date,
               priority,
             });
-            storeTasksToStorage(updatedList);
-            return updatedList;
+            storeTasksToStorage(list);
+            return list;
           });
           setEditTask(false);
         }}

@@ -1,6 +1,5 @@
 import { Day, format, nextDay } from "date-fns";
 import { Dispatch, SetStateAction } from "react";
-import "../App.css";
 
 interface CalenderArgs {
   date: Date;
@@ -25,24 +24,18 @@ function Calender({ date, activeDay, setActiveDay }: CalenderArgs) {
   return (
     <section>
       <ul className="days">
-        {days.map((day) => (
-          <li
-            className={
-              `${day.month} ${day.day} ${day.year}` === activeDay
-                ? "active"
-                : ""
-            }
-          >
-            <button
-              onClick={() =>
-                setActiveDay(`${day.month} ${day.day} ${day.year}`)
-              }
-            >
-              <div>{day.dayOfWeek}</div>
-              <div>{day.day}</div>
-            </button>
-          </li>
-        ))}
+        {days.map((day) => {
+          const dateString = `${day.month} ${day.day} ${day.year}`;
+          
+          return (
+            <li className={dateString === activeDay ? "active" : ""}>
+              <button onClick={() => setActiveDay(dateString)}>
+                <div>{day.dayOfWeek}</div>
+                <div>{day.day}</div>
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </section>
   );
